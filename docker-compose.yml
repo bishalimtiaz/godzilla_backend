@@ -1,27 +1,43 @@
 version: '3.9'
+
 services:
   db:
     image: mysql:8
     restart: always
     environment:
-      MYSQL_DATABASE: 'myapp'
-      MYSQL_USER: 'myapp'
-      MYSQL_PASSWORD: 'myapp'
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - '3306:3306'
     volumes:
       - ./mysql_data:/var/lib/mysql
     command: '--default-authentication-plugin=mysql_native_password'
+
   app:
-    build: ..
+    build: .
     restart: always
-    environment:
-      DB_HOST: db
-      DB_USER: 'myapp'
-      DB_PASSWORD: 'myapp'
-      DB_NAME: 'myapp'
     ports:
       - '3000:3000'
-    depends_on:
-      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - mynetwork
+    env_file:
+      - .env.${NODE_ENV}
+    environment:
+      DB_HOST: db
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      # Add any other environment variables specific to this environment here
+
+    command: npm run ${NODE_ENV}
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  db_data:
