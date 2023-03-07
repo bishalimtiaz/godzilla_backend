@@ -1,6 +1,6 @@
 node_modules/
 .env
 .idea/
-/.env.dev
-/.env.prod
-/.env.stag
+/.dev.env
+/.prod.env
+/.stag.env

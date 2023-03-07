@@ -2,20 +2,25 @@
   "name": "godzila_backend",
   "version": "0.0.0",
   "description": "backend for godzila",
+  "author": "cookieTech Ltd",
+  "license": "ISC",
+  "directories": {
+    "lib": "app"
+  },
   "main": "app/index.js",
   "scripts": {
     "start:dev": "NODE_ENV=dev nodemon app/index.js",
     "start:stag": "NODE_ENV=stag nodemon app/index.js",
     "start:prod": "NODE_ENV=prod node app/index.js"
   },
-  "author": "cookieTech Ltd",
-  "license": "ISC",
   "dependencies": {
+    "cors": "2.8.5",
+    "helmet": "6.0.1",
     "bcryptjs": "2.4.3",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "jsonwebtoken": "9.0.0",
-    "mysql2": "mysql2"
+    "mysql2": "3.2.0"
   },
   "devDependencies": {
     "nodemon": "2.0.21"
