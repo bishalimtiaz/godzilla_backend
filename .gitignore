@@ -4,3 +4,4 @@ node_modules/
 /.dev.env
 /.prod.env
 /.stag.env
+/package-lock.json
