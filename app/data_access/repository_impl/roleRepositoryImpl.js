@@ -1,4 +1,4 @@
-const { Role } = require('../models');
+const { Role } =  require('../../data_access/entities');
 const { NotFoundError } = require('../exceptions');
 
 class RoleRepositoryImpl extends RoleRepository {

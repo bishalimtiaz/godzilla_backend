@@ -1,8 +1,6 @@
-// infrastructure/repositories/UserRepositoryImpl.js
-
-const { User, UserRole } = require('../../domain/models');
-const { NotFoundError, ValidationError } = require('../../domain/exceptions');
-const UserRepository = require('../../domain/repositories/UserRepository');
+const { User, UserRole } = require('../../data_access/entities');
+const { NotFoundError, ValidationError } = require('../exceptions');
+const UserRepository = require('../repository/userRepository');
 
 class UserRepositoryImpl extends UserRepository {
   async createUser(user) {

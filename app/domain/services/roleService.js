@@ -1,4 +1,4 @@
-const RoleRepositoryImpl = require('../repository_impl/RoleRepositoryImpl');
+const RoleRepositoryImpl = require('../../data_access/repository_impl/RoleRepositoryImpl');
 const { NotFoundError } = require('../exceptions');
 
 class RoleService {

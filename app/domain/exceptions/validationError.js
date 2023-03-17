@@ -1,8 +1,9 @@
-const AppError = require('./AppError');
+const AppError = require('./appError');
 
 class ValidationError extends AppError {
   constructor(message = 'Not Found') {
     super(message, 400);
+    this.name = 'NotFoundError';
   }
 }
 

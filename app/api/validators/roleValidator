@@ -1,0 +1,13 @@
+const { body, param } = require('express-validator');
+
+const createRoleValidator = [
+  body('name').notEmpty().withMessage('Role name cannot be empty.'),
+  body('permissions').isArray().withMessage('Permissions must be an array.'),
+];
+
+const updateRoleValidator = [
+  ...createRoleValidator,
+  param('id').isInt().withMessage('Invalid role ID.'),
+];
+
+module.exports = { createRoleValidator, updateRoleValidator };
