@@ -1,14 +1,22 @@
 const { Role } =  require('../../data_access/entities');
 const { NotFoundError } = require('../exceptions');
+const { RoleRepository} = require('../../domain/repository/roleRepository');
+const db = require('../../data-access');
+const { injectable } = require('inversify');
 
+@injectable()
 class RoleRepositoryImpl extends RoleRepository {
   async createRole(role) {
-    const createdRole = await Role.create(role);
-    return createdRole;
+    try {
+      const createdRole = await db.Role.create(role);
+      return createdRole;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getRoleById(roleId) {
-    const role = await Role.findByPk(roleId);
+    const role = await db.Role.findByPk(roleId);
     if (!role) {
       throw new NotFoundError('Role not found.');
     }
@@ -16,21 +24,28 @@ class RoleRepositoryImpl extends RoleRepository {
   }
 
   async updateRole(roleId, updates) {
-    const role = await this.getRoleById(roleId);
-    await role.update(updates);
-    return role;
+    try {
+      const role = await this.getRoleById(roleId);
+      await role.update(updates);
+      return role;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async deleteRole(roleId) {
-    const role = await this.getRoleById(roleId);
-    await role.destroy();
+    try {
+      const role = await this.getRoleById(roleId);
+      await role.destroy();
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findAll() {
-    const roles = await Role.findAll();
+    const roles = await db.Role.findAll();
     return roles;
   }
 }
 
 module.exports = RoleRepositoryImpl;
-

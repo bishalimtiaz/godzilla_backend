@@ -1,14 +1,19 @@
-const RoleRepositoryImpl = require('../../data_access/repository_impl/RoleRepositoryImpl');
-const { NotFoundError } = require('../exceptions');
+const { NotFoundError, ValidationError } = require('../exceptions');
+const { injectable, inject } = require('inversify');
+const { RoleRepository } = require('../../domain/repository/roleRepository');
+const { Role } = require('../models/role');
+const TYPES = require('../../app/di/types');
 
+@injectable()
 class RoleService {
-  constructor(roleRepository = new RoleRepositoryImpl()) {
+  constructor(@inject(TYPES.RoleRepository) roleRepository) {
     this.roleRepository = roleRepository;
   }
 
-  async createRole(role) {
+  async createRole(roleRequest) {
+    const role = new Role(null, roleRequest.name, roleRequest.description);
     const createdRole = await this.roleRepository.createRole(role);
-    return createdRole;
+    return new Role(createdRole.id, createdRole.name, createdRole.description);
   }
 
   async getRoleById(roleId) {
@@ -16,12 +21,19 @@ class RoleService {
     if (!role) {
       throw new NotFoundError('Role not found.');
     }
-    return role;
+    return new Role(role.id, role.name, role.description);
   }
 
-  async updateRole(roleId, updates) {
+  async updateRole(roleId, roleRequest) {
+    const updates = {};
+    if (roleRequest.name) {
+      updates.name = roleRequest.name;
+    }
+    if (roleRequest.description) {
+      updates.description = roleRequest.description;
+    }
     const updatedRole = await this.roleRepository.updateRole(roleId, updates);
-    return updatedRole;
+    return new Role(updatedRole.id, updatedRole.name, updatedRole.description);
   }
 
   async deleteRole(roleId) {
@@ -29,10 +41,9 @@ class RoleService {
   }
 
   async getAllRoles() {
-    const roles = await this.roleRepository.findAll();
-    return roles;
+    const roles = await this.roleRepository.getAllRoles();
+    return roles.map(role => new Role(role.id, role.name, role.description));
   }
 }
 
 module.exports = RoleService;
-

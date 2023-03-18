@@ -16,7 +16,17 @@ async function connect() {
   }
 }
 
+async function disconnect() {
+  try {
+    await sequelize.close();
+    console.log('Connection has been closed successfully.');
+  } catch (error) {
+    console.error('Unable to close the database connection:', error);
+  }
+}
+
 module.exports = {
   connect,
+  disconnect,
   sequelize
 };

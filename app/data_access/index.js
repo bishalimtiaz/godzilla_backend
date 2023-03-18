@@ -1,17 +1,12 @@
-const User = require('./entities/User');
-const Role = require('./entities/Role');
-const UserRole = require('./entities/UserRole');
+const { User, Role, UserRole } = require('./entities');
+const { sequelize } = require('../config/database');
+require('./associations');
 
-User.hasMany(UserRole);
-UserRole.belongsTo(User);
-
-Role.hasMany(UserRole);
-UserRole.belongsTo(Role);
-
-const db  = {
+const db = {
   User,
   Role,
   UserRole,
+  sequelize,
 };
 
 module.exports = db;
