@@ -28,7 +28,7 @@ const authMiddleware = (roles = []) => {
 
       // If there are required roles, check if the user has them
       if (roles.length > 0) {
-        const hasRequiredRoles = roles.every((requiredRole) => tokenRoles.includes(requiredRole));
+        const hasRequiredRoles = tokenRoles.every((requiredRole) => roles.includes(requiredRole));
         if (!hasRequiredRoles) {
           throw new ForbiddenError('Permission not granted.');
         }

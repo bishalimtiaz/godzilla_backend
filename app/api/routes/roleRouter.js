@@ -18,7 +18,7 @@ router.post(
 
 router.get(
   '/',
-  authMiddleware(['Super Admin']),
+  authMiddleware([Permissions.SuperAdmin, Permissions.Admin]),
   roleController.getAllRoles.bind(roleController),
 );
 

@@ -1,0 +1,47 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const UnauthorizedError = require('../exceptions/unauthorizedError');
+const EndUserRepositoryImpl = require('../../data_access/repository_impl/endUserRepositoryImpl');
+const config = require('../../config/config');
+
+
+
+const SALT_ROUNDS = 10;
+
+class LoginService {
+
+     userRepository = new EndUserRepositoryImpl();
+
+    async login(contactNumber, password) {
+
+        const user = await this.userRepository.findEndUserByConatNumber(contactNumber);
+    
+        if (!user) {
+          console.log('login_debug', 'user null');
+          throw new UnauthorizedError('Invalid email or password.');
+        }
+    
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          console.log('login_debug', 'invalid password');
+          throw new UnauthorizedError('Invalid email or password.');
+        }
+    
+    
+        // Create a JWT token with the user ID and email as the payload
+        const token = jwt.sign(
+          { userId: user.id, contactNumber: user.contactNumber},
+          config.jwtSecret,
+          {
+            expiresIn: '1h',
+          }
+        );
+    
+        return {
+          token: token
+        };
+      }
+
+}
+
+module.exports = LoginService;

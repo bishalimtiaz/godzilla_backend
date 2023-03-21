@@ -12,6 +12,10 @@ const EndUser = sequelize.define('end_user', {
     allowNull: false,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   isActive: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
