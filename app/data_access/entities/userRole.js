@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../sequelize');
+const {sequelize} = require('../../config/database');
 
 const UserRole = sequelize.define('userRole', {
   id: {
@@ -11,7 +11,7 @@ const UserRole = sequelize.define('userRole', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'User',
+      model: 'user',
       key: 'id',
     },
   },
@@ -19,7 +19,7 @@ const UserRole = sequelize.define('userRole', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Role',
+      model: 'role',
       key: 'id',
     },
   },
@@ -33,6 +33,9 @@ const UserRole = sequelize.define('userRole', {
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
+},
+{
+  tableName: 'user_role'
 });
 
 module.exports = UserRole;

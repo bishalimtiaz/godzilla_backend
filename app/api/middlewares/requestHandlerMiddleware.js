@@ -1,13 +1,22 @@
-const { BadRequestError } = require('../../domain/exceptions');
+const { validationResult } = require('express-validator');
+const UnprocessableEntityError = require('../../domain/exceptions/unprocessableEntityError');
 
-const handleRequest = (schema) => {
-  return (req, res, next) => {
-    const { error } = schema.validate(req.body);
-    if (error) {
-      const message = error.details.map((x) => x.message).join(', ');
-      throw new BadRequestError(message);
+const handleRequest = (validators) => {
+  return async (req, res, next) => {
+    try {
+      await Promise.all(validators.map((validator) => validator.run(req)));
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        const firstError = errors.array()[0].msg;
+        throw new UnprocessableEntityError(firstError);
+
+      }
+      return next();
+        
+    } catch (error) {
+      next(error);
     }
-    return next();
   };
 };
 

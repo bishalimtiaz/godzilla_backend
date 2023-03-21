@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-ENV NODE_ENV=dev
+ENV PATH="/app/node_modules/.bin:$PATH"
 
 EXPOSE 3000
 

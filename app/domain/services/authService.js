@@ -1,30 +1,49 @@
 const bcrypt = require('bcrypt');
-const { UnauthorizedError } = require('../exceptions');
-const { User } = require('../models/user');
-const { UserRepository } = require('../../domain/repository/userRepository');
-const { injectable, inject } = require('inversify');
-const { TYPES } = require('../../app/di/types');
+const jwt = require('jsonwebtoken');
+const UnauthorizedError = require('../../domain/exceptions/unauthorizedError');
+const UserRepositoryImpl = require('../../data_access/repository_impl/userRepositoryImpl')
+const config = require('../../config/config');
 
 const SALT_ROUNDS = 10;
 
-@injectable()
-class AuthService {
-  constructor(@inject(TYPES.UserRepository) userRepository) {
-    this.userRepository = userRepository;
-  }
 
-  async login(username, password) {
-    const user = await this.userRepository.getUserByUsername(username);
+class AuthService {
+
+  userRepository = new UserRepositoryImpl();
+
+
+
+  async login(email, password) {
+    const user = await this.userRepository.findByEmail(email);
+    console.log('login_debug', user.userRoles);
+
     if (!user) {
-      throw new UnauthorizedError('Invalid username or password.');
+      console.log('login_debug', 'user null');
+      throw new UnauthorizedError('Invalid email or password.');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedError('Invalid username or password.');
+      console.log('login_debug', 'invalid password');
+      throw new UnauthorizedError('Invalid email or password.');
     }
 
-    return new User(user.id, user.username, user.role);
+    // Get the roles associated with the user
+    const roles = user.userRoles.map((userRole) => userRole.role.name);
+
+    // Create a JWT token with the user ID and email as the payload
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, roles: roles }, 
+      config.jwtSecret, 
+      {
+      expiresIn: '1h',
+    }
+    );
+
+    return {
+      token: token,
+      user: user,
+    };
   }
 
   async register(username, password, role) {
@@ -39,5 +58,6 @@ class AuthService {
     return new User(createdUser.id, createdUser.username, createdUser.role);
   }
 }
+
 
 module.exports = AuthService;

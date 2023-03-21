@@ -1,14 +1,13 @@
-const { NotFoundError, ValidationError } = require('../exceptions');
-const { injectable, inject } = require('inversify');
-const { RoleRepository } = require('../../domain/repository/roleRepository');
-const { Role } = require('../models/role');
-const TYPES = require('../../app/di/types');
+const NotFoundError = require('../../domain/exceptions/notFoundError');
+const ValidationError = require('../../domain/exceptions/validationError');
 
-@injectable()
+const  RoleRepositoryImpl = require('../../data_access/repository_impl/roleRepositoryImpl');
+const { Role } = require('../models/role');
+
 class RoleService {
-  constructor(@inject(TYPES.RoleRepository) roleRepository) {
-    this.roleRepository = roleRepository;
-  }
+
+  roleRepository = new RoleRepositoryImpl();
+
 
   async createRole(roleRequest) {
     const role = new Role(null, roleRequest.name, roleRequest.description);
@@ -41,9 +40,10 @@ class RoleService {
   }
 
   async getAllRoles() {
-    const roles = await this.roleRepository.getAllRoles();
-    return roles.map(role => new Role(role.id, role.name, role.description));
+    const roles = await this.roleRepository.findAll();
+    return roles;
   }
 }
+
 
 module.exports = RoleService;

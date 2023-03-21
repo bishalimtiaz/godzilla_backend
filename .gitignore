@@ -5,3 +5,4 @@ node_modules/
 /.prod.env
 /.stag.env
 /package-lock.json
+/app/data_access/config/config.json

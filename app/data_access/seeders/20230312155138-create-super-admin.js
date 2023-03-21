@@ -1,15 +1,18 @@
 'use strict';
+const uuid = require('uuid');
+const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     const now = new Date();
+    const hashedPassword = await bcrypt.hash('1234!@#$', 10);
     const users = [
       {
         id: uuid.v4(),
         userName: 'superadmin',
         email: 'super.admin@godzilla.com',
-        password: 'superadminpassword',
+        password: hashedPassword,
         isActive: true,
         createdAt: now,
         updatedAt: now,
@@ -38,11 +41,11 @@ module.exports = {
         updatedAt: now,
       },
     ];
-    await queryInterface.bulkInsert('UserRole', userRoles, {});
+    await queryInterface.bulkInsert('user_role', userRoles, {});
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('UserRole', null, {});
+    await queryInterface.bulkDelete('user_role', null, {});
     await queryInterface.bulkDelete('user', null, {});
   }
 };

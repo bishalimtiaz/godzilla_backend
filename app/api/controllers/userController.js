@@ -1,14 +1,13 @@
-const { NotFoundError, ValidationError } = require('../exceptions');
-const { injectable, inject } = require('inversify');
-const { UserService } = require('../../domain/services/userService');
-const { User } = require('../models/user');
-const TYPES = require('../../app/di/types');
+const NotFoundError = require('../../domain/exceptions/notFoundError');
+const ValidationError = require('../../domain/exceptions/validationError');
 
-@injectable()
+const  UserService  = require('../../domain/services/userService');
+const User  = require('../../domain/models/user');
+
 class UserController {
-  constructor(@inject(TYPES.UserService) userService) {
-    this.userService = userService;
-  }
+
+  userService = new UserService();
+
 
   async createUser(req, res, next) {
     try {
@@ -72,5 +71,6 @@ class UserController {
     }
   }
 }
+
 
 module.exports = UserController;

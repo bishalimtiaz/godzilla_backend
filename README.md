@@ -51,3 +51,31 @@ npx sequelize-cli migration:generate --name create-user_role-table
 │   └── package.json
 
 ```
+
+docker-compose --env-file .dev.env config
+
+NODE_ENV=dev docker-compose --env-file .dev.env up --build 
+
+npm install -g sequelize-cli
+
+sequelize db:migrate --name=20230312134445-create-user_role-table.js 
+
+sequelize db:seed:all --env development
+
+sequelize db:seed --seed 20220309093621-roles-seeder.js
+
+
+
+Mysql Setup
+
+Docker containers run in an isolated network environment, so they cannot directly access the host machine's network using localhost or 127.0.0.1.
+
+`ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'`
+
+
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+

@@ -1,8 +1,9 @@
-const { body } = require('express-validator');
+const { body, check } = require('express-validator');
+
 
 const loginValidator = [
-  body('email').isEmail().withMessage('Invalid email'),
-  body('password')
+  check('email').isEmail().withMessage('Invalid email'),
+  check('password')
     .trim()
     .notEmpty()
     .withMessage('Password is required')

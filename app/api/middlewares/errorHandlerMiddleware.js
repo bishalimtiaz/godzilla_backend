@@ -1,4 +1,4 @@
-const { InternalServerError } = require('../../domain/exceptions');
+const InternalServerError  = require('../../domain/exceptions/internalServerError');
 
 const errorHandlerMiddleware = (error, req, res, next) => {
   if (!error.statusCode) {

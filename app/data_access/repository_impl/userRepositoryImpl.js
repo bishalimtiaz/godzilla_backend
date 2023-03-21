@@ -1,10 +1,14 @@
-const { User, UserRole, Role } = require('../../data_access/entities');
-const { NotFoundError, ValidationError } = require('../exceptions');
-const UserRepository = require('../../domain/repository/userRepository');
-const db = require('../../data-access');
-const { injectable, inject } = require('inversify');
+const User = require('../../data_access/entities/user');
+const UserRole = require('../../data_access/entities/userRole');
+const Role = require('../../data_access/entities/role');
 
-@injectable()
+const NotFoundError = require('../../domain/exceptions/notFoundError');
+const ValidationError = require('../../domain/exceptions/validationError');
+
+const UserRepository = require('../../domain/repository/userRepository');
+const db = require('../../data_access/index');
+
+
 class UserRepositoryImpl extends UserRepository {
   async createUser(user) {
     try {
@@ -73,7 +77,16 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   async findByEmail(email) {
-    const user = await db.User.findOne({ where: { email } });
+    const user = await User.findOne({ 
+      where: { email } ,
+      include: [
+        {
+          model: UserRole,
+          include: [{ model: Role }],
+        },
+      ],
+    });
+    console.log('login_debug: user: ', user);
     return user;
   }
 
@@ -111,4 +124,5 @@ class UserRepositoryImpl extends UserRepository {
   }
 }
 
-module.exports = new UserRepositoryImpl();
+
+module.exports = UserRepositoryImpl;

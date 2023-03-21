@@ -1,13 +1,15 @@
-const { RoleService } = require('../../domain/services/roleService');
-const { NotFoundError } = require('../../domain/exceptions');
-const { injectable, inject } = require('inversify');
-const { TYPES } = require('../../app/di/types');
 
-@injectable()
+const RoleService = require('../../domain/services/roleService');
+const NotFoundError  = require('../../domain/exceptions/notFoundError');
+const{RoleResponse} = require('../../domain/models/role')
+
+
+
 class RoleController {
-  constructor(@inject(TYPES.RoleService) roleService) {
-    this.roleService = roleService;
-  }
+
+
+  roleService = new RoleService();
+  
 
   async createRole(req, res, next) {
     try {
@@ -22,7 +24,10 @@ class RoleController {
   async getAllRoles(req, res, next) {
     try {
       const roles = await this.roleService.getAllRoles();
-      res.json(roles);
+
+      const response = roles.map((userRole) => new RoleResponse(userRole.name,userRole.description));
+
+      res.json(response);
     } catch (error) {
       next(error);
     }

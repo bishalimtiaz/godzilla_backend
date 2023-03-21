@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 
-const db = require('./data-access');
+
+const db = require('./data_access/index');
 const rootRouter = require('../app/api/routes/rootRouter.js');
 const errorHandlerMiddleware = require('./api/middlewares/errorHandlerMiddleware')
 

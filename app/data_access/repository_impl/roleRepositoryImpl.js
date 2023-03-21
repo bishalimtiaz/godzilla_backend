@@ -1,10 +1,7 @@
-const { Role } =  require('../../data_access/entities');
-const { NotFoundError } = require('../exceptions');
-const { RoleRepository} = require('../../domain/repository/roleRepository');
-const db = require('../../data-access');
-const { injectable } = require('inversify');
+const NotFoundError = require('../../domain/exceptions/notFoundError');
+const RoleRepository = require('../../domain/repository/roleRepository');
+const db = require('../../data_access/index');
 
-@injectable()
 class RoleRepositoryImpl extends RoleRepository {
   async createRole(role) {
     try {

@@ -1,13 +1,11 @@
 const express = require('express');
-const { handleRequest } = require('../middlewares/requestHandlerMiddleware');
+const handleRequest = require('../middlewares/requestHandlerMiddleware');
 const { loginValidator } = require('../validators/authValidator');
-const { authController } = require('../controllers/authController');
-const { container } = require('../../app/di/inject');
-const { TYPES } = require('../../app/di/types');
+const AuthController = require('../controllers/authController')
 
 const router = express.Router();
 
-const authController = container.resolve(TYPES.AuthController);
+const authController = new AuthController();
 
 router.post('/login', handleRequest(loginValidator), authController.login.bind(authController));
 

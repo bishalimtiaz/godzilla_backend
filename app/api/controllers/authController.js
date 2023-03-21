@@ -1,26 +1,35 @@
-const { UnauthorizedError } = require('../exceptions');
-const { AuthService } = require('../../domain/services/authService');
-const { injectable, inject } = require('inversify');
-const { TYPES } = require('../../app/di/types');
+const UnauthorizedError = require('../../domain/exceptions/unauthorizedError');
+const AuthService = require('../../domain/services/authService');
+const { UserResponse } = require('../../domain/models/user');
+const { RoleResponse } = require('../../domain/models/role');
 
-@injectable()
 class AuthController {
-  constructor(@inject(TYPES.AuthService) authService) {
-    this.authService = authService;
-  }
+
+
+  authService = new AuthService();
+
 
   async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      const token = await this.authService.authenticate(email, password);
-      if (!token) {
-        throw new UnauthorizedError('Invalid email or password.');
-      }
-      res.json({ token });
+
+      const response = await this.authService.login(email, password);
+      const user = response.user
+
+
+      response.user = new UserResponse(
+        user.id, user.username, 
+        user.email, 
+        user.isActive, 
+        user.userRoles.map((userRole) => new RoleResponse(userRole.role.name,userRole.role.description)));
+
+      res.json(response);
+
     } catch (error) {
       next(error);
     }
   }
 }
+
 
 module.exports = AuthController;

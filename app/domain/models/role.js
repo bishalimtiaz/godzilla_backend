@@ -5,6 +5,13 @@ class Role {
       this.description = description;
     }
   }
+
+class RoleResponse{
+  constructor(name, description) {
+    this.name = name;
+    this.description = description;
+  }
+}
   
-module.exports = Role;
+module.exports = {Role, RoleResponse};
   

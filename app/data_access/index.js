@@ -1,5 +1,9 @@
-const { User, Role, UserRole } = require('./entities');
-const { sequelize } = require('../config/database');
+const User = require('./entities/user');
+const Role = require('./entities/role');
+const UserRole = require('./entities/userRole');
+
+
+const { sequelize,connect, disconnect } = require('../config/database');
 require('./associations');
 
 const db = {
@@ -7,6 +11,8 @@ const db = {
   Role,
   UserRole,
   sequelize,
+  connect,
+  disconnect
 };
 
 module.exports = db;

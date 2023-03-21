@@ -1,14 +1,14 @@
-const { NotFoundError, ForbiddenError, ValidationError } = require('../exceptions');
-const { injectable, inject } = require('inversify');
-const { UserRepository } = require('../../domain/repository/userRepository');
-const { User, UserRequest, UserResponse, UserUpdateRequest } = require('../models/user');
-const TYPES = require('../../app/di/types');
+const NotFoundError= require('../../domain/exceptions/notFoundError');
+const ForbiddenError = require('../../domain/exceptions/forbiddenError');
+const ValidationError = require('../../domain/exceptions/validationError');
+const  UserRepositoryImpl = require('../../data_access/repository_impl/userRepositoryImpl');
+const { User, UserRequest, UserResponse, UserUpdateRequest } = require('../../domain/models/user');
 
-@injectable()
+
 class UserService {
-  constructor(@inject(TYPES.UserRepository) userRepository) {
-    this.userRepository = userRepository;
-  }
+
+  
+  userRepository = new UserRepositoryImpl();
 
   async createUser(userRequest) {
     try {
