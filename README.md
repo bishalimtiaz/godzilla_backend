@@ -64,6 +64,8 @@ sequelize db:seed:all --env development
 
 sequelize db:seed --seed 20220309093621-roles-seeder.js
 
+npx sequelize-cli migration:generate --name <migration-name>
+
 
 
 Mysql Setup
