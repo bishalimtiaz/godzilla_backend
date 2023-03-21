@@ -1,6 +1,6 @@
 const NotFoundError = require('../../domain/exceptions/notFoundError');
 const EndUserRepository = require('../../domain/repository/endUserRepository');
-const db = require('../../data_access/models/index');
+const db = require('..//index');
 
 class EndUserRepositoryImpl extends EndUserRepository {
   async createEndUser(endUser) {
@@ -62,6 +62,11 @@ class EndUserRepositoryImpl extends EndUserRepository {
       },
     });
     return endUsers;
+  }
+
+  async findEndUserByConatNumber(contactNumber) {
+    const endUser = await db.EndUser.findOne({ where: { contact_number: contactNumber } });
+    return endUser;
   }
 }
 

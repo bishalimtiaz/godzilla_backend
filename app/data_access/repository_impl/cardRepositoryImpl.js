@@ -1,6 +1,6 @@
 const NotFoundError = require('../../domain/exceptions/notFoundError');
 const CardRepository = require('../../domain/repository/cardRepository');
-const db = require('../../data_access/models/index');
+const db = require('../index');
 
 class CardRepositoryImpl extends CardRepository {
   async createCard(card) {

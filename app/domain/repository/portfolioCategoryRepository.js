@@ -4,6 +4,7 @@ class PortfolioCategoryRepository {
     async updatePortfolioCategory(portfolioCategoryId, updates) {}
     async deletePortfolioCategory(portfolioCategoryId) {}
     async findAll() {}
+    async getPortfolioCategoryByName(name) {}
   }
   
   module.exports = PortfolioCategoryRepository;

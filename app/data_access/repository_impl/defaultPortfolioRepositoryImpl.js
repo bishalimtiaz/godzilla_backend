@@ -1,6 +1,6 @@
 const NotFoundError = require('../../domain/exceptions/notFoundError');
 const DefaultPortfolioRepository = require('../../domain/repository/defaultPortfolioRepository');
-const db = require('../../data_access/models/index');
+const db = require('../index');
 
 class DefaultPortfolioRepositoryImpl extends DefaultPortfolioRepository {
   async createDefaultPortfolio(defaultPortfolio) {

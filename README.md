@@ -81,3 +81,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
 
+SELECT User FROM mysql.user;
+
+DROP USER 'username'@'localhost';
+
+

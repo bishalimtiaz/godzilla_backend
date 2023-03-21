@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../../domain/exceptions/unauthorizedError');
 const ForbiddenError = require('../../domain/exceptions/forbiddenError');
+const TokenExpiredError = require('jsonwebtoken/lib/TokenExpiredError');
 const config = require('../../config/config');
 
 
@@ -40,6 +41,9 @@ const authMiddleware = (roles = []) => {
 
       next();
     } catch (error) {
+      if (error instanceof TokenExpiredError) {
+       error = new UnauthorizedError('Sessioun Timeout');
+      }
       next(error);
     }
   };

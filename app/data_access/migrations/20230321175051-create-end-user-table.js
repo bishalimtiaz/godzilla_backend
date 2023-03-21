@@ -18,13 +18,23 @@ module.exports = {
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false,
+        defaultValue: true,
       },
       selected_portfolio_category_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'portfolio_category',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      card_id: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        references: {
+          model: 'card',
           key: 'id',
         },
         onUpdate: 'CASCADE',

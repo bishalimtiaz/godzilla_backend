@@ -3,8 +3,9 @@ const Role = require('./entities/role');
 const UserRole = require('./entities/userRole');
 const DefaultPortfolio = require('./entities/defaultPortfolio');
 const PortfolioCategory = require('./entities/portfolioCategory');
-const EndUser = require('./entities/end_user');
+const EndUser = require('./entities/endUser');
 const Portfolio = require('./entities/portfolio');
+const Card = require('./entities/card');
 
 
 
@@ -20,6 +21,10 @@ Portfolio.belongsTo(EndUser);
 EndUser.belongsTo(PortfolioCategory, {
     foreignKey: 'selected_portfolio_category_id',
   });
+
+// Each End User will have exactly one card
+EndUser.hasOne(Card);
+Card.belongsTo(EndUser);
 
 
 //Each portfolio will have exactly one portfolio category

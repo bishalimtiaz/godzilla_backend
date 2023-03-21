@@ -1,6 +1,6 @@
 const NotFoundError = require('../../domain/exceptions/notFoundError');
 const PortfolioCategoryRepository = require('../../domain/repository/portfolioCategoryRepository');
-const db = require('../../data_access/models/index');
+const db = require('../index');
 
 class PortfolioCategoryRepositoryImpl extends PortfolioCategoryRepository {
   async createPortfolioCategory(portfolioCategory) {
@@ -42,6 +42,18 @@ class PortfolioCategoryRepositoryImpl extends PortfolioCategoryRepository {
   async findAll() {
     const portfolioCategories = await db.PortfolioCategory.findAll();
     return portfolioCategories;
+  }
+
+  async getPortfolioCategoryByName(name) {
+    const portfolioCategory = await db.PortfolioCategory.findOne({
+      where: {
+        name: name,
+      },
+    });
+    if (!portfolioCategory) {
+      throw new NotFoundError(`Portfolio category with name ${name} not found.`);
+    }
+    return portfolioCategory;
   }
 }
 

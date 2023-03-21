@@ -1,19 +1,19 @@
 const UnauthorizedError = require('../../domain/exceptions/unauthorizedError');
-const AuthService = require('../../domain/services/authService');
+const AdminService = require('../../domain/services/adminService');
 const { UserResponse } = require('../../domain/models/user');
 const { RoleResponse } = require('../../domain/models/role');
 
-class AuthController {
+class AdminController {
 
 
-  authService = new AuthService();
+  adminService = new AdminService();
 
 
   async login(req, res, next) {
     try {
       const { email, password } = req.body;
 
-      const response = await this.authService.login(email, password);
+      const response = await this.adminService.login(email, password);
       const user = response.user
 
 
@@ -29,7 +29,22 @@ class AuthController {
       next(error);
     }
   }
+
+  async createUser(req, res, next) {
+    try {
+      const { contactNumber, fullName, address } = req.body;
+
+      const response = await this.adminService.createUser(contactNumber, fullName, address);
+
+      res.json(response);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 
-module.exports = AuthController;
+
+module.exports = AdminController;

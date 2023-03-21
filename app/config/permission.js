@@ -1,5 +1,5 @@
 const Permissions = {
-    SuperAdmin: 'SuperAdmin',
+    SuperAdmin: 'Super Admin',
     Admin: 'Admin',
     User: 'User',
   };
