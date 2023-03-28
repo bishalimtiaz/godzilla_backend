@@ -10,22 +10,22 @@ module.exports = {
         id: uuid.v4(),
         name: 'Super Admin',
         description: 'Super Admin Role',
-        createdAt: now,
-        updatedAt: now,
+        created_at: now,
+        updated_at: now,
       },
       {
         id: uuid.v4(),
         name: 'Admin',
         description: 'Admin Role',
-        createdAt: now,
-        updatedAt: now,
+        created_at: now,
+        updated_at: now,
       },
       {
         id: uuid.v4(),
         name: 'Card User',
         description: 'Card User Role',
-        createdAt: now,
-        updatedAt: now,
+        created_at: now,
+        updated_at: now,
       },
     ];
     await queryInterface.bulkInsert('role', roles, {});

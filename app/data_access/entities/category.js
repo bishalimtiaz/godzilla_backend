@@ -11,7 +11,7 @@ const Category = sequelize.define('category', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_att: {
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),

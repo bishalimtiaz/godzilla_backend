@@ -30,15 +30,13 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       created_at: {
-        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE
       },
       updated_at: {
-        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      },
+        type: Sequelize.DATE
+      }
 
     });
   },

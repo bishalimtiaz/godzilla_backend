@@ -60,7 +60,11 @@ npm install -g sequelize-cli
 
 sequelize db:migrate --name=20230312134445-create-user_role-table.js 
 
+equelize db:migrate
+
 sequelize db:seed:all --env development
+sequelize db:seed:all
+
 
 sequelize db:seed --seed 20220309093621-roles-seeder.js
 

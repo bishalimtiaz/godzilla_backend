@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/database');
 
-const UserRole = sequelize.define('userRole', {
+const UserRole = sequelize.define('user_role', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  userId: {
+  user_id: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
@@ -15,7 +15,7 @@ const UserRole = sequelize.define('userRole', {
       key: 'id',
     },
   },
-  roleId: {
+  role_id: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
@@ -23,12 +23,12 @@ const UserRole = sequelize.define('userRole', {
       key: 'id',
     },
   },
-  createdAt: {
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updatedAt: {
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),

@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      userName: {
+      user_name: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -21,16 +21,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      isActive: {
+      is_active: {
         allowNull: false,
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

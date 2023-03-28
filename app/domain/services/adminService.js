@@ -7,11 +7,8 @@ const ConflictError = require('../exceptions/conflictError');
 const UserRepositoryImpl = require('../../data_access/repository_impl/userRepositoryImpl')
 const config = require('../../config/config');
 
-const portfolioCategoryRepositoryImpl = require('../../data_access/repository_impl/portfolioCategoryRepositoryImpl');
 const CardRepositoryImplImpl = require('../../data_access/repository_impl/cardRepositoryImpl');
-const DefaultPortfolioRepositoryImpl = require('../../data_access/repository_impl/defaultPortfolioRepositoryImpl');
 const EndUserRepositoryImpl = require('../../data_access/repository_impl/endUserRepositoryImpl');
-const PortfolioRepositoryImpl = require('../../data_access/repository_impl/portfolioRepositoryImpl');;
 
 
 
@@ -72,11 +69,8 @@ class AdminService {
   }
 
 
-  portfolioCategoryRepository = new portfolioCategoryRepositoryImpl();
   cardRepository = new CardRepositoryImplImpl();
-  defaultPortfolioRepository = new DefaultPortfolioRepositoryImpl();
   endUserRepository = new EndUserRepositoryImpl();
-  portfolioRepository = new PortfolioRepositoryImpl();
 
 
   async createUser(contactNumber, fullName, address) {
@@ -101,33 +95,14 @@ class AdminService {
         'default'
       );
   
-      if (!defaultPortfolioCategory) {
-        throw new Error('Default portfolio category not found.');
-      }
-  
-      // Create a new default portfolio
-      const newDefaultPortfolio = await this.defaultPortfolioRepository.createDefaultPortfolio({
-        full_name: fullName,
-        address: address,
-        portfolioCategoryId: defaultPortfolioCategory.id,
-      });
-  
       // Create a new end user with the card reference and default portfolio category
-      const newEndUser = await this.endUserRepository.createEndUser({
-        contact_number: contactNumber,
-        selected_card_id: newCard.id,
-        selected_portfolio_category_id: defaultPortfolioCategory.id, // set the selected_portfolio_category_id to defaultPortfolioCategory.id
-        password: hashedPassword,
-      });
+      // const newEndUser = await this.endUserRepository.createEndUser({
+      //   contact_number: contactNumber,
+      //   selected_card_id: newCard.id,
+      //   selected_portfolio_category_id: defaultPortfolioCategory.id, // set the selected_portfolio_category_id to defaultPortfolioCategory.id
+      //   password: hashedPassword,
+      // });
 
-      console.log('end_debug:', newEndUser.id);
-  
-      // Create a new portfolio for the end user and default portfolio
-      await this.portfolioRepository.createPortfolio({
-        id: uuid.v4(),
-        end_user_id: newEndUser.id, // set the end_user_id value
-        default_portfolio_id: newDefaultPortfolio.id,
-      });
   
       return {
         password: password.toString(),

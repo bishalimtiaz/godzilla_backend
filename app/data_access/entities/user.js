@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
-      userName: {
+      user_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -22,17 +22,17 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isActive: {
+      is_active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      createdAt: {
+      created_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),

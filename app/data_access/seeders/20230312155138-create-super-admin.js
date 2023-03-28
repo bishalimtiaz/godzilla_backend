@@ -10,12 +10,12 @@ module.exports = {
     const users = [
       {
         id: uuid.v4(),
-        userName: 'superadmin',
+        user_name: 'superadmin',
         email: 'super.admin@godzilla.com',
         password: hashedPassword,
-        isActive: true,
-        createdAt: now,
-        updatedAt: now,
+        is_active: true,
+        created_at: now,
+        updated_at: now,
       },
     ];
     await queryInterface.bulkInsert('user', users, {});
@@ -35,10 +35,10 @@ module.exports = {
     const userRoles = [
       {
         id: uuid.v4(),
-        userId: superAdminUser,
-        roleId: superAdminRole,
-        createdAt: now,
-        updatedAt: now,
+        user_id: superAdminUser,
+        role_id: superAdminRole,
+        created_at: now,
+        updated_at: now,
       },
     ];
     await queryInterface.bulkInsert('user_role', userRoles, {});

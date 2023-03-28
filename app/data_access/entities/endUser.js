@@ -47,6 +47,14 @@ const EndUser = sequelize.define('end_user', {
       key: 'id',
     },
   },
+  card_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'card',
+      key: 'id',
+    },
+  },
   created_at: {
     type: DataTypes.DATE,
     allowNull: false,

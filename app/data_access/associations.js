@@ -1,10 +1,7 @@
 const User = require('./entities/user');
 const Role = require('./entities/role');
 const UserRole = require('./entities/userRole');
-const DefaultPortfolio = require('./entities/defaultPortfolio');
-const PortfolioCategory = require('./entities/portfolioCategory');
 const EndUser = require('./entities/endUser');
-const Portfolio = require('./entities/portfolio');
 const Card = require('./entities/card');
 const Settings = require('./entities/settings');
 const Background = require('./entities/background');
@@ -30,10 +27,10 @@ const SocialNetwork = require('./entities/socialNetwork');
 
 
 User.hasMany(UserRole);
-UserRole.belongsTo(User);
+UserRole.belongsTo(User, { foreignKey: 'user_id' });
 
 Role.hasMany(UserRole);
-UserRole.belongsTo(Role);
+UserRole.belongsTo(Role, { foreignKey: 'role_id' });
 
 
 ///Settings Associations
@@ -68,42 +65,20 @@ UserExperiences.belongsTo(Experience, { foreignKey: 'experience_id' });
 //End User has many Educations
 
 EndUser.hasMany(UserEducations);
-UserEducations.belongsTo(EndUser, {foreignKey: 'end_user_id'});
+UserEducations.belongsTo(EndUser, { foreignKey: 'end_user_id' });
 
 Education.hasMany(UserEducations);
-UserEducations.belongsTo(Education,{foreignKey: 'education_id'});
+UserEducations.belongsTo(Education, { foreignKey: 'education_id' });
 
 
 //User Has many social networks
 
 EndUser.hasMany(UserSocialNetworks);
-UserSocialNetworks.belongsTo(EndUser,{foreignKey: 'end_user_id'});
+UserSocialNetworks.belongsTo(EndUser, { foreignKey: 'end_user_id' });
 
 SocialNetwork.hasMany(UserSocialNetworks);
-UserSocialNetworks.belongsTo(SocialNetwork,{foreignKey: 'social_network_id'});
-
-
-
-
-
-
-
-
-//Each End User will have exactly one portfolio
-EndUser.hasOne(Portfolio);
-Portfolio.belongsTo(EndUser);
-EndUser.belongsTo(PortfolioCategory, {
-  foreignKey: 'selected_portfolio_category_id',
-});
+UserSocialNetworks.belongsTo(SocialNetwork, { foreignKey: 'social_network_id' });
 
 // Each End User will have exactly one card
 EndUser.hasOne(Card);
 Card.belongsTo(EndUser);
-
-
-//Each portfolio will have exactly one portfolio category
-DefaultPortfolio.belongsTo(PortfolioCategory);
-
-
-Portfolio.belongsTo(DefaultPortfolio);
-DefaultPortfolio.hasMany(Portfolio);

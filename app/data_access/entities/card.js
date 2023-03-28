@@ -7,17 +7,17 @@ const Card = sequelize.define('card', {
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true,
   },
-  createdAt: {
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updatedAt: {
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),

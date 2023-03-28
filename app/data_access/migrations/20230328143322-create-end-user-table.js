@@ -5,9 +5,9 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('end_user', {
       id: {
+        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
       contact_number: {
@@ -16,19 +16,39 @@ module.exports = {
         unique: true,
       },
       password: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      isActive: {
+      email: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      is_active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: false,
       },
-      selected_portfolio_category_id: {
+      settings_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'portfolio_category',
+          model: 'settings',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      introduction_id: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'introduction',
           key: 'id',
         },
         onUpdate: 'CASCADE',

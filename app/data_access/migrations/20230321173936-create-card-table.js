@@ -9,21 +9,19 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
-      isActive: {
+      is_active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
       },
-      createdAt: {
-        type: Sequelize.DATE,
+      created_at: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE
       },
-      updatedAt: {
-        type: Sequelize.DATE,
+      updated_at: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
+        type: Sequelize.DATE
+      }
     });
   },
 

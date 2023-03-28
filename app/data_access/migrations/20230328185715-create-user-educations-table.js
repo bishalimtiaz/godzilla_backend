@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('user_experiences', {
+    await queryInterface.createTable('user_educations', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -19,11 +19,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      experience_id: {
+      education_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: {
-          model: 'experience',
+          model: 'education',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -41,6 +41,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('user_experiences');
+    await queryInterface.dropTable('user_educations');
   }
 };
