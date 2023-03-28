@@ -67,6 +67,7 @@ const EndUser = sequelize.define('end_user', {
   },
 }, {
   tableName: 'end_user',
+  timestamps: false
 });
 
 module.exports = EndUser;

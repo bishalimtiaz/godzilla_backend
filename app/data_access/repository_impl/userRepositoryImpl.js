@@ -77,7 +77,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   async findByEmail(email) {
-    const user = await User.findOne({ 
+    const user = await db.User.findOne({ 
       where: { email } ,
       include: [
         {

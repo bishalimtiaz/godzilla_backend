@@ -33,7 +33,8 @@ const SocialNetwork = sequelize.define('social_network',
         },
     },
     {
-        tableName: 'social_network'
+        tableName: 'social_network',
+        timestamps: false
     }
 );
 

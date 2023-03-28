@@ -56,7 +56,8 @@ const Introduction = sequelize.define('introduction',
         },
     },
     {
-        tableName: 'introduction'
+        tableName: 'introduction',
+        timestamps: false
     }
 );
 

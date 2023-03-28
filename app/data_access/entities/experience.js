@@ -47,6 +47,7 @@ const Experience = sequelize.define('experience',
         },
     }, {
     tableName: 'experience',
+    timestamps: false
 });
 
 module.exports = Experience;

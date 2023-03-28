@@ -35,7 +35,8 @@ const UserExperiences = sequelize.define('user_experiences', {
   },
 },
 {
-  tableName: 'user_experiences'
+  tableName: 'user_experiences',
+  timestamps: false
 });
 
 module.exports = UserExperiences;

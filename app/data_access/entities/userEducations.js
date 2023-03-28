@@ -35,7 +35,8 @@ const UserEducations = sequelize.define('user_educations', {
   },
 },
 {
-  tableName: 'user_educations'
+  tableName: 'user_educations',
+  timestamps: false
 });
 
 module.exports = UserEducations;

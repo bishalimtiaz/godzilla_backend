@@ -39,7 +39,8 @@ const Skills = sequelize.define('skills',
         },
     },
     {
-        tableName: 'skills'
+        tableName: 'skills',
+        timestamps: false
     }
 );
 

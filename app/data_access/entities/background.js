@@ -25,7 +25,8 @@ const Background = sequelize.define('background',
         },
     },
     {
-        tableName: 'background'
+        tableName: 'background',
+        timestamps: false
     }
 );
 

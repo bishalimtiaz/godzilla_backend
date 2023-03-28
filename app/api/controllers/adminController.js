@@ -21,7 +21,7 @@ class AdminController {
         user.id, user.username, 
         user.email, 
         user.isActive, 
-        user.userRoles.map((userRole) => new RoleResponse(userRole.role.name,userRole.role.description)));
+        user.user_roles.map((userRole) => new RoleResponse(userRole.role.name,userRole.role.description)));
 
       res.json(response);
 

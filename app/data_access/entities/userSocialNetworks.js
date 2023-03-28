@@ -36,7 +36,8 @@ const UserSocialNetworks = sequelize.define('user_social_networks',
   },
 },
 {
-  tableName: 'user_social_networks'
+  tableName: 'user_social_networks',
+  timestamps: false
 });
 
 module.exports = UserSocialNetworks;

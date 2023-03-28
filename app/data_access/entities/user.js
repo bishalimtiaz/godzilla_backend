@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/database');
-const UserRole = require('./userRole');
-const Role = require('./role')
 
 const User = sequelize.define('user', {
     id: {
@@ -38,7 +36,8 @@ const User = sequelize.define('user', {
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
 },{
-  tableName: 'user'
+  tableName: 'user',
+  timestamps: false
 },
 );
 

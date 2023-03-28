@@ -25,7 +25,7 @@ class AdminService {
 
   async login(email, password) {
     const user = await this.userRepository.findByEmail(email);
-    console.log('login_debug', user.userRoles);
+    console.log('login_debug', user.user_roles);
 
     if (!user) {
       console.log('login_debug', 'user null');
@@ -39,7 +39,7 @@ class AdminService {
     }
 
     // Get the roles associated with the user
-    const roles = user.userRoles.map((userRole) => userRole.role.name);
+    const roles = user.user_roles.map((userRole) => userRole.role.name);
 
     // Create a JWT token with the user ID and email as the payload
     const token = jwt.sign(

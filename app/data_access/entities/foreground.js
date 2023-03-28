@@ -25,7 +25,8 @@ const Foregorund = sequelize.define('foreground',
         },
     },
     {
-        tableName: 'foreground'
+        tableName: 'foreground',
+        timestamps: false
     }
 );
 

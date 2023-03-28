@@ -24,6 +24,7 @@ const Card = sequelize.define('card', {
   },
 }, {
   tableName: 'card',
+  timestamps: false
 });
 
 module.exports = Card;

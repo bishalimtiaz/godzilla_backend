@@ -37,7 +37,8 @@ const Settings = sequelize.define('settings',
         },
     },
     {
-        tableName: 'settings'
+        tableName: 'settings',
+        timestamps: false
     }
 );
 
