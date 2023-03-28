@@ -16,17 +16,43 @@ const EndUser = sequelize.define('end_user', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  isActive: {
+  email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+  is_active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   },
-  createdAt: {
+  settings_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'settings',
+      key: 'id',
+    },
+  },
+  introduction_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'introduction',
+      key: 'id',
+    },
+  },
+  created_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  updatedAt: {
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
