@@ -89,19 +89,7 @@ class AdminService {
   
       // Create a new card
       const newCard = await this.cardRepository.createCard();
-  
-      // Get the default portfolio category
-      const defaultPortfolioCategory = await this.portfolioCategoryRepository.getPortfolioCategoryByName(
-        'default'
-      );
-  
-      // Create a new end user with the card reference and default portfolio category
-      // const newEndUser = await this.endUserRepository.createEndUser({
-      //   contact_number: contactNumber,
-      //   selected_card_id: newCard.id,
-      //   selected_portfolio_category_id: defaultPortfolioCategory.id, // set the selected_portfolio_category_id to defaultPortfolioCategory.id
-      //   password: hashedPassword,
-      // });
+      
 
   
       return {
