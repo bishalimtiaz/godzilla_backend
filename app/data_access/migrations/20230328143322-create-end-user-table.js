@@ -15,6 +15,10 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false
@@ -64,7 +68,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      created_att: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

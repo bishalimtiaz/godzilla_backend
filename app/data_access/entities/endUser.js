@@ -12,6 +12,10 @@ const EndUser = sequelize.define('end_user', {
     allowNull: false,
     unique: true,
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,

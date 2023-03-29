@@ -64,8 +64,8 @@ class EndUserRepositoryImpl extends EndUserRepository {
     return endUsers;
   }
 
-  async findEndUserByConatNumber(contactNumber) {
-    const endUser = await db.EndUser.findOne({ where: { contact_number: contactNumber } });
+  async findEndUserByConatNumber(contact_number) {
+    const endUser = await db.EndUser.findOne({ where: { contact_number: contact_number } });
     return endUser;
   }
 }

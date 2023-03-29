@@ -3,9 +3,9 @@ const CardRepository = require('../../domain/repository/cardRepository');
 const db = require('../index');
 
 class CardRepositoryImpl extends CardRepository {
-  async createCard(card) {
+  async createCard() {
     try {
-      const createdCard = await db.Card.create(card);
+      const createdCard = await db.Card.create();
       return createdCard;
     } catch (error) {
       throw error;

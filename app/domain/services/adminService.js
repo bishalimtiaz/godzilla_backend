@@ -9,6 +9,12 @@ const config = require('../../config/config');
 
 const CardRepositoryImplImpl = require('../../data_access/repository_impl/cardRepositoryImpl');
 const EndUserRepositoryImpl = require('../../data_access/repository_impl/endUserRepositoryImpl');
+const SettingsRepository = require('../../data_access/repository_impl/settingsRepository');
+const BackgroundSettings = require('../../utils/backgroundSettings');
+const ForegroundSettings = require('../../utils/foregroundSettings');
+const NotFoundError = require('../exceptions/notFoundError');
+const IntroductionRepository = require('../../data_access/repository_impl/introductionRepository');
+
 
 
 
@@ -71,27 +77,69 @@ class AdminService {
 
   cardRepository = new CardRepositoryImplImpl();
   endUserRepository = new EndUserRepositoryImpl();
+  settingsRepository = new SettingsRepository();
+  introductionRepository = new IntroductionRepository();
 
 
-  async createUser(contactNumber, fullName, address) {
+  async createUser(contact_number, full_name, address) {
     try {
       // Generate a 6-digit random number as the password
 
-      const endUser = await this.endUserRepository.findEndUserByConatNumber(contactNumber);
-      if(endUser){
+      const endUser = await this.endUserRepository.findEndUserByConatNumber(contact_number);
+      if (endUser) {
         throw new ConflictError('User with contact number already exists');
       }
 
       const password = Math.floor(Math.random() * 900000) + 100000;
-  
+
       // Hash the password
       const hashedPassword = await bcrypt.hash(password.toString(), SALT_ROUNDS);
-  
+
+
+      //Get default background and foreground settings
+      const background = await this.settingsRepository.findBackgroundSettingsByBackgroundName(BackgroundSettings.Default);
+      const foreground = await this.settingsRepository.findForegroundSettingsByColorScheme(ForegroundSettings.Default);
+
+      if (!background) {
+        throw NotFoundError('Default Background Settings Not Found');
+      }
+      if (!foreground) {
+        throw NotFoundError('Default Foreground Settings Not Found');
+      }
+
+      //Create New Settings.
+
+      const newSettings = await this.settingsRepository.createSettings(
+        {
+          id: uuid.v4(),
+          background_id: background.id,
+          foreground_id: foreground.id,
+        }
+      );
+
+
       // Create a new card
       const newCard = await this.cardRepository.createCard();
-      
 
-  
+      //create newIntroduction
+
+      const newIntroduction = await this.introductionRepository.createIntroduction();
+
+      //create new User
+
+      const newUser = await this.endUserRepository.createEndUser(
+        {
+          id: uuid.v4(),
+          contact_number: contact_number,
+          name: full_name,
+          password: hashedPassword,
+          address: address,
+          settings_id: newSettings.id,
+          introduction_id: newIntroduction.id,
+          card_id: newCard.id,
+        }
+      );
+
       return {
         password: password.toString(),
       };
@@ -100,7 +148,7 @@ class AdminService {
     }
   }
 
-  
+
 
 
 

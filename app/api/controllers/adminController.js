@@ -32,9 +32,9 @@ class AdminController {
 
   async createUser(req, res, next) {
     try {
-      const { contactNumber, fullName, address } = req.body;
+      const { contact_number, full_name, address } = req.body;
 
-      const response = await this.adminService.createUser(contactNumber, fullName, address);
+      const response = await this.adminService.createUser(contact_number, full_name, address);
 
       res.json(response);
 
