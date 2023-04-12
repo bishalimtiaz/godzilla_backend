@@ -14,6 +14,8 @@ const BackgroundSettings = require('../../utils/backgroundSettings');
 const ForegroundSettings = require('../../utils/foregroundSettings');
 const NotFoundError = require('../exceptions/notFoundError');
 const IntroductionRepository = require('../../data_access/repository_impl/introductionRepository');
+const PublicProfileRespository = require('../../data_access/repository_impl/publicProfileRepository');
+
 
 
 
@@ -79,6 +81,7 @@ class AdminService {
   endUserRepository = new EndUserRepositoryImpl();
   settingsRepository = new SettingsRepository();
   introductionRepository = new IntroductionRepository();
+  publicProfileRepository = new PublicProfileRespository();
 
 
   async createUser(contact_number, full_name, address) {
@@ -137,6 +140,25 @@ class AdminService {
           settings_id: newSettings.id,
           introduction_id: newIntroduction.id,
           card_id: newCard.id,
+        }
+      );
+
+      const hyphenatedStr = full_name.toLowerCase().replace(/\s+/g, '-');
+
+      const salt = bcrypt.genSaltSync(SALT_ROUNDS);
+
+      // Hash the phone number using bcrypt and the salt
+    
+      const hash = bcrypt.hashSync(contact_number + salt, SALT_ROUNDS);
+
+      const profileUrl = hyphenatedStr + '-' + hash.slice(0, 8);
+
+      const publicProfile = await this.publicProfileRepository.createPublicProfile(
+
+        {
+          id: uuid.v4(),
+          public_url: profileUrl,
+          end_user_id: newUser.id,
         }
       );
 

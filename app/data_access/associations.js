@@ -16,6 +16,7 @@ const UserEducations = require('./entities/userEducations');
 const Education = require('./entities/education');
 const UserSocialNetworks = require('./entities/userSocialNetworks');
 const SocialNetwork = require('./entities/socialNetwork');
+const PublicProfile = require('./entities/publicProfile');
 
 
 
@@ -82,3 +83,8 @@ UserSocialNetworks.belongsTo(SocialNetwork, { foreignKey: 'social_network_id' })
 // Each End User will have exactly one card
 EndUser.hasOne(Card, { foreignKey: 'card_id' });
 Card.belongsTo(EndUser, { foreignKey: 'card_id' });
+
+
+//Each Public Profile has one EndUser
+
+PublicProfile.belongsTo(EndUser, { foreignKey: 'end_user_id' });

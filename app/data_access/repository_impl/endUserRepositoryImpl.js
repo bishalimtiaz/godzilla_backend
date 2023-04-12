@@ -68,6 +68,31 @@ class EndUserRepositoryImpl extends EndUserRepository {
     const endUser = await db.EndUser.findOne({ where: { contact_number: contact_number } });
     return endUser;
   }
+
+  async getBasicProfileDetails(end_user_id) {
+    try {
+      const endUser = await db.EndUser.findOne({
+        where: { id: end_user_id },
+        include: [
+          {
+            model: db.Introduction,
+            attributes: ['profession', 'profile_image', 'description'],
+          },
+          {
+            model: db.UserSocialNetworks,
+            include: {
+              model: db.SocialNetwork,
+              attributes: ['sn_name', 'sn_logo', 'base_url'],
+            },
+          },
+        ],
+      });
+      return endUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 module.exports = EndUserRepositoryImpl;

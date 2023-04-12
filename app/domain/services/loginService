@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../exceptions/unauthorizedError');
 const EndUserRepositoryImpl = require('../../data_access/repository_impl/endUserRepositoryImpl');
 const config = require('../../config/config');
+const PublicProfileRespository = require('../../data_access/repository_impl/publicProfileRepository');
+const NotFoundError = require('../exceptions/notFoundError');
 
 
 
@@ -10,37 +12,47 @@ const SALT_ROUNDS = 10;
 
 class LoginService {
 
-     userRepository = new EndUserRepositoryImpl();
+  userRepository = new EndUserRepositoryImpl();
+  publicProfileReporitory = new PublicProfileRespository();
 
-    async login(contactNumber, password) {
+  async login(contactNumber, password) {
 
-        const user = await this.userRepository.findEndUserByConatNumber(contactNumber);
-    
-        if (!user) {
-          console.log('login_debug', 'user null');
-          throw new UnauthorizedError('Invalid email or password.');
-        }
-    
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-          console.log('login_debug', 'invalid password');
-          throw new UnauthorizedError('Invalid email or password.');
-        }
-    
-    
-        // Create a JWT token with the user ID and email as the payload
-        const token = jwt.sign(
-          { userId: user.id, contactNumber: user.contactNumber},
-          config.jwtSecret,
-          {
-            expiresIn: '1h',
-          }
-        );
-    
-        return {
-          token: token
-        };
+    const user = await this.userRepository.findEndUserByConatNumber(contactNumber);
+
+    if (!user) {
+      throw new UnauthorizedError('Invalid email or password.');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log('login_debug', 'invalid password');
+      throw new UnauthorizedError('Invalid email or password.');
+    }
+
+    //fetch public profile using yserID
+
+    const publicProfile = await this.publicProfileReporitory.findPublicProfileByUserId(user.id);
+
+    if (!publicProfile) {
+      throw new NotFoundError('Public Profile Not Found');
+    }
+
+
+    // Create a JWT token with the user ID and email as the payload
+    const token = jwt.sign(
+      { userId: user.id, contactNumber: user.contactNumber },
+      config.jwtSecret,
+      {
+        expiresIn: '3h',
       }
+    );
+
+    return {
+      token: token,
+      profileId: publicProfile.id,
+      publicUrl: publicProfile.public_url
+    };
+  }
 
 }
 

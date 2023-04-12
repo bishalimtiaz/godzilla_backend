@@ -19,6 +19,8 @@ const UserEducations = require('./entities/userEducations');
 const UserExperiences = require('./entities/userExperiences');
 const UserSkills = require('./entities/userSkills');
 const UserSocialNetworks = require('./entities/userSocialNetworks');
+const PublicProfile = require('./entities/publicProfile');
+
 
 
 
@@ -45,6 +47,7 @@ const db = {
   UserExperiences,
   UserSkills,
   UserSocialNetworks,
+  PublicProfile,
   sequelize,
   connect,
   disconnect
